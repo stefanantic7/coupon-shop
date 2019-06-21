@@ -1,5 +1,7 @@
 package rs.raf.controllers;
 
+import rs.raf.annotations.Authenticated;
+import rs.raf.annotations.AuthenticatedAsAdmin;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
 import rs.raf.repositories.CouponRepository;
@@ -14,12 +16,22 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("/shops")
+@Path(value="/shops")
 public class ShopController {
 
     @GET
+    @AuthenticatedAsAdmin
     @Produces(MediaType.APPLICATION_JSON)
     public List<Shop> get() {
+        System.out.println("controller");
+        return new ArrayList<>();
+    }
+
+    @Path("/test")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Shop> getS() {
+        System.out.println("controller");
         return new ArrayList<>();
     }
 

@@ -3,6 +3,7 @@ package rs.raf.models;
 import rs.raf.enums.Privilege;
 
 public class User {
+
     private long id;
     private String firstName;
     private String lastName;
@@ -67,5 +68,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return this.getPrivilegeLevel().equals(Privilege.ADMINISTRATOR);
     }
 }
