@@ -36,9 +36,12 @@ public class RestrictedOperationsRequestFilter implements ContainerRequestFilter
         System.out.println("PreRequest");
 
         try {
-            //TODO: get token from request!
-            String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsImV4cCI6MTU2MTI0MDgwMCwidXNlcklkIjoxfQ.ID4lQjS_rmEtzvUMA6dbGjW1CRlvccnerpMW4o7LKb4";
-            Algorithm algorithm = Algorithm.HMAC256("secrett");
+            String token = requestContext.getHeaderString("Authorization");
+            if(token.startsWith("Bearer ")) {
+                token = token.replace("Bearer ", "");
+            }
+            System.out.println(token);
+            Algorithm algorithm = Algorithm.HMAC256("secret");
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("auth0")
                     .build();

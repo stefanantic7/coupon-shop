@@ -22,21 +22,6 @@ import java.util.Date;
 class CouponshopAppConfig extends ResourceConfig {
 
     public CouponshopAppConfig() {
-//        String token = "";
-//        try {
-//            LocalDate date = LocalDate.now().plusDays(1);
-//            Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
-//            Algorithm algorithm = Algorithm.HMAC256("secrett");
-//            token = JWT.create()
-//                    .withIssuer("auth0")
-//                    .withExpiresAt(new Date(timestamp.getTime()))
-//                    .withClaim("userId", 1)
-//                    .sign(algorithm);
-//            System.out.println(token);
-//        } catch (JWTCreationException exception){
-//            //Invalid Signing configuration / Couldn't convert Claims.
-//            System.out.println("greska");
-//        }
 
         packages("rs.raf");
         register(new ApplicationBinder());

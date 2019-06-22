@@ -12,6 +12,8 @@ create table users
         primary key (id)
 
 );
+create unique index users_username_uindex
+    on users (username);
 
 INSERT INTO couponshop.users (id, first_name, last_name, privilege_level, username, password, version)
-VALUES (1, 'Stefan', 'Antic', 'ADMINISTRATOR', 'stefanantic', '12345678', 1);
+VALUES (1, 'Stefan', 'Antic', 'ADMINISTRATOR', 'stefanantic', '$2y$06$bYakIZG3C0N7bMA6yHTIdeK5edbl22cdtqpG7kZZ3VteDuK.jNMaC', 1);
