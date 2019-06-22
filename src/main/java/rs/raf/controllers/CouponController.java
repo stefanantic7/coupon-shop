@@ -1,6 +1,7 @@
 package rs.raf.controllers;
 
 import rs.raf.dtos.CouponDto;
+import rs.raf.enums.CouponStatus;
 import rs.raf.mappers.CouponMapperImpl;
 import rs.raf.mappers.ShopMapperImpl;
 import rs.raf.models.Coupon;
@@ -28,8 +29,9 @@ public class CouponController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public PaginationResponse<CouponDto> get(@QueryParam("page")@DefaultValue("1") int page,
-                                                @QueryParam("limit")@DefaultValue("10") int limit) {
-        return this.couponService.paginate(limit, page);
+                                             @QueryParam("limit")@DefaultValue("10") int limit,
+                                             @QueryParam("status")@DefaultValue("ALL") String couponStatus) {
+        return this.couponService.paginate(limit, page, CouponStatus.valueOf(couponStatus.toUpperCase()));
     }
 
 }
