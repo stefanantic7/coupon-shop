@@ -5,6 +5,7 @@ import rs.raf.annotations.AuthenticatedAsAdmin;
 import rs.raf.dtos.ShopDto;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
+import rs.raf.responses.PaginationResponse;
 import rs.raf.services.ShopService;
 
 import javax.inject.Inject;
@@ -29,8 +30,9 @@ public class ShopController {
     @GET
     @AuthenticatedAsAdmin
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ShopDto> get() {
-        return this.shopService.paginate(10, 2);
+    public PaginationResponse<ShopDto> get(@QueryParam("page")@DefaultValue("1") int page,
+                                           @QueryParam("limit")@DefaultValue("10") int limit) {
+        return this.shopService.paginate(limit, page);
     }
 
     @GET

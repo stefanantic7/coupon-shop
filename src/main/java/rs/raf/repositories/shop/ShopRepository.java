@@ -11,4 +11,6 @@ public interface ShopRepository {
     Shop find(int id);
 
     int delete(int id);
+
+    int count();
 }

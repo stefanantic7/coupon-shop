@@ -82,4 +82,26 @@ public class ShopRepositoryMySql implements ShopRepository {
         }
         return deleted;
     }
+
+    @Override
+    public int count() {
+        int count = 0;
+
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT count(id) as count FROM shops");
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 }

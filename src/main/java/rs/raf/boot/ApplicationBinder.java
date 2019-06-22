@@ -8,6 +8,7 @@ import rs.raf.repositories.shop.ShopRepository;
 import rs.raf.repositories.shop.ShopRepositoryMySql;
 import rs.raf.repositories.user.UserRepository;
 import rs.raf.repositories.user.UserRepositoryMySql;
+import rs.raf.services.CouponService;
 import rs.raf.services.ShopService;
 import rs.raf.services.UserService;
 
@@ -21,5 +22,6 @@ public class ApplicationBinder extends AbstractBinder {
 
         bindAsContract(UserService.class);
         bindAsContract(ShopService.class);
+        bindAsContract(CouponService.class);
     }
 }
