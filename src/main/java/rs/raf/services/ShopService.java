@@ -33,7 +33,11 @@ public class ShopService {
     public ShopDto find(int id) {
         Shop shop = this.shopRepository.find(id);
         shop.setCoupons(this.couponRepository.getWhereShopId(id));
-        System.out.println(shop.getCoupons());
         return ShopMapper.instance.shopToShopDto(shop);
+    }
+
+    public void delete(int id) {
+        this.couponRepository.deleteWhereShopId(id);
+        this.shopRepository.delete(id);
     }
 }

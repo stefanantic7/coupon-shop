@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CouponRepository {
     List<Coupon> getWhereShopId(int shopId);
+    int deleteWhereShopId(int shopId);
 }

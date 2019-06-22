@@ -49,4 +49,21 @@ public class CouponRepositoryMySql implements CouponRepository {
         return coupons;
     }
 
+    @Override
+    public int deleteWhereShopId(int shopId) {
+        int deleted = 0;
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM coupons where shop_id = ?");
+            preparedStatement.setInt(1, shopId);
+            deleted = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
 }

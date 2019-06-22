@@ -73,4 +73,45 @@ public class UserRepositoryMySql implements UserRepository {
 
         return user;
     }
+
+    @Override
+    public User create(String firstName, String lastName, String privilegeLevel, String username, String password) {
+        User user = new User();
+
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            String[] generatedColumns = {"id"};
+
+            preparedStatement = connection
+                    .prepareStatement("INSERT INTO users (FIRST_NAME, LAST_NAME, PRIVILEGE_LEVEL, USERNAME, PASSWORD) VALUES(?, ?, ?, ?, ?)", generatedColumns);
+
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, privilegeLevel);
+            preparedStatement.setString(4, username);
+            preparedStatement.setString(5, password);
+
+            //TODO: check execution.
+            preparedStatement.executeUpdate();
+
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                System.out.println(resultSet.getLong(1));
+                user.setId(resultSet.getInt(1));
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setPrivilegeLevel(Privilege.valueOf(privilegeLevel));
+                user.setUsername(username);
+                user.setPassword(password);
+            }
+
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 }

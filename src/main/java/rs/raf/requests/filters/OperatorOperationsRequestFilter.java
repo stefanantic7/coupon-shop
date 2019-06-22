@@ -45,8 +45,8 @@ public class OperatorOperationsRequestFilter implements ContainerRequestFilter {
 
         } catch (JWTVerificationException exception){
             // TODO: return more precise error to user
-            ErrorResponse errorResponse = new ErrorResponse(401, exception.getLocalizedMessage());
-            requestContext.abortWith(Response.status(401).entity(errorResponse).build());
+            ErrorResponse errorResponse = new ErrorResponse(Response.Status.UNAUTHORIZED.getStatusCode(), exception.getLocalizedMessage());
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(errorResponse).build());
         }
     }
 }

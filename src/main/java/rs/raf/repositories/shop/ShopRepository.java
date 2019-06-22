@@ -9,4 +9,6 @@ public interface ShopRepository {
     List<Shop> paginate(int limit, int page);
 
     Shop find(int id);
+
+    int delete(int id);
 }

@@ -21,9 +21,14 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public String login(LoginRequest loginRequest) {
-        User user = this.userRepository.find(loginRequest.getUsername());
-        BCrypt.Result result = BCrypt.verifyer().verify(loginRequest.getPassword().toCharArray(), user.getPassword().toCharArray());
+    public UserDto create(String firstName, String lastName, String privilegeLevel, String username, String password) {
+        User user = this.userRepository.create(firstName, lastName, privilegeLevel, username, password);
+        return UserMapper.instance.userToUserDto(user);
+    }
+
+    public String login(String username, String password) {
+        User user = this.userRepository.find(username);
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword().toCharArray());
         if(!result.verified) {
             return null;
         }

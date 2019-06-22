@@ -65,4 +65,21 @@ public class ShopRepositoryMySql implements ShopRepository {
 
         return shop;
     }
+
+    @Override
+    public int delete(int id) {
+        int deleted = 0;
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM shops where id = ?");
+            preparedStatement.setInt(1, id);
+            deleted = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 }

@@ -41,6 +41,13 @@ public class ShopController {
         return this.shopService.find(shopId);
     }
 
-
+    @DELETE
+    @Path("/{shopId}")
+    @AuthenticatedAsAdmin
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("shopId") int shopId) {
+        this.shopService.delete(shopId);
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
 
 }
