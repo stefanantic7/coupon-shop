@@ -24,7 +24,6 @@ public class CouponRepositoryMySql implements CouponRepository {
         List<Coupon> coupons = new ArrayList<>();
         Set<Integer> shopIds = new HashSet<>();
         try {
-            connection = MySqlConnectionPool.getConnection();
             String query = "SELECT * FROM coupons ";
             if (couponStatus.equals(CouponStatus.ACTIVE)) {
                 query += " WHERE (valid_from <= ? AND valid_to >= ?) OR (valid_from <= ? AND valid_to is null)";
@@ -33,6 +32,9 @@ public class CouponRepositoryMySql implements CouponRepository {
                 query += " WHERE valid_from > ? OR valid_to < ?";
             }
             query += " LIMIT ?, ?;";
+
+            connection = MySqlConnectionPool.getConnection();
+
             preparedStatement = connection.prepareStatement(query);
 
             java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());

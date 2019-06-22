@@ -10,16 +10,6 @@ public class ShopDto {
     private String name;
     private List<CouponDto> coupons;
 
-    public ShopDto() {
-        this.coupons = new ArrayList<>();
-    }
-
-    public ShopDto(long id, String name) {
-        this();
-        this.id = id;
-        this.name = name;
-    }
-
     public long getId() {
         return id;
     }

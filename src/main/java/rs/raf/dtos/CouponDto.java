@@ -1,27 +1,18 @@
 package rs.raf.dtos;
 
+import rs.raf.models.Shop;
+
 public class CouponDto {
     private long id;
+    private long shopId;
     private String product;
+    private ShopDto shop;
     private float discountedPrice;
     private float originalPrice;
     private String validFrom;
     private String validTo;
 
     public CouponDto() { }
-
-    public CouponDto(long id, String product, float originalPrice, float discountedPrice, String validFrom, String validTo) {
-        this.id = id;
-        this.product = product;
-        this.discountedPrice = discountedPrice;
-        this.originalPrice = originalPrice;
-        this.validFrom = validFrom;
-        this.validTo = validTo;
-    }
-
-    public CouponDto(long id, String product, float originalPrice, float discountedPrice, String validFrom) {
-        this(id, product, originalPrice, discountedPrice, validFrom, null);
-    }
 
     public long getId() {
         return id;
@@ -69,5 +60,21 @@ public class CouponDto {
 
     public void setValidTo(String validTo) {
         this.validTo = validTo;
+    }
+
+    public void setShop(ShopDto shop) {
+        this.shop = shop;
+    }
+
+    public ShopDto getShop() {
+        return shop;
+    }
+
+    public void setShopId(long shopId) {
+        this.shopId = shopId;
+    }
+
+    public long getShopId() {
+        return shopId;
     }
 }
