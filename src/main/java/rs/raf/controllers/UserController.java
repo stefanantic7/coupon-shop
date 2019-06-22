@@ -1,5 +1,6 @@
 package rs.raf.controllers;
 
+import rs.raf.dtos.UserDto;
 import rs.raf.models.User;
 import rs.raf.requests.LoginRequest;
 import rs.raf.responses.LoginResponse;
@@ -27,7 +28,7 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_JSON)
     public LoginResponse login(@Valid LoginRequest loginRequest) {
         String token = this.userService.login(loginRequest);
-        User user = this.userService.find(loginRequest.getUsername());
+        UserDto user = this.userService.find(loginRequest.getUsername());
         return new LoginResponse(token, user);
     }
 }

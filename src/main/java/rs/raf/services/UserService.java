@@ -5,6 +5,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import rs.raf.dtos.UserDto;
+import rs.raf.mappers.UserMapper;
 import rs.raf.models.User;
 import rs.raf.repositories.user.UserRepository;
 import rs.raf.requests.LoginRequest;
@@ -20,7 +22,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public String login(LoginRequest loginRequest) {
-        User user = this.find(loginRequest.getUsername());
+        User user = this.userRepository.find(loginRequest.getUsername());
         BCrypt.Result result = BCrypt.verifyer().verify(loginRequest.getPassword().toCharArray(), user.getPassword().toCharArray());
         if(!result.verified) {
             return null;
@@ -45,14 +47,14 @@ public class UserService {
                 .build();
         DecodedJWT jwt = verifier.verify(token);
 
-        return this.find(jwt.getClaim("userId").asInt());
+        return this.userRepository.find(jwt.getClaim("userId").asInt());
     }
 
-    public User find(int id) {
-        return this.userRepository.find(id);
+    public UserDto find(int id) {
+        return UserMapper.instance.userToUserDto(this.userRepository.find(id));
     }
 
-    public User find(String username) {
-        return this.userRepository.find(username);
+    public UserDto find(String username) {
+        return UserMapper.instance.userToUserDto(this.userRepository.find(username));
     }
 }

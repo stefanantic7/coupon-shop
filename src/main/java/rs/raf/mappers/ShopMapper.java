@@ -8,7 +8,7 @@ import rs.raf.models.Shop;
 
 @Mapper
 public interface ShopMapper {
-    ShopMapper INSTANCE = Mappers.getMapper( ShopMapper.class );
+    ShopMapper instance = Mappers.getMapper( ShopMapper.class );
 
     ShopDto shopToShopDto(Shop shop);
 

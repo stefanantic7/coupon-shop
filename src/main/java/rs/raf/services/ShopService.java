@@ -1,12 +1,8 @@
 package rs.raf.services;
 
-import org.jvnet.hk2.annotations.Service;
 import rs.raf.dtos.ShopDto;
 import rs.raf.mappers.ShopMapper;
-import rs.raf.mappers.ShopMapperImpl;
-import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
-import rs.raf.repositories.CouponRepository;
 import rs.raf.repositories.shop.ShopRepository;
 
 import javax.inject.Inject;
@@ -26,7 +22,7 @@ public class ShopService {
         List<ShopDto> shopDtos = new ArrayList<>();
         List<Shop> shops = this.shopRepository.paginate(limit, page);
         for (Shop shop: shops) {
-            shopDtos.add(ShopMapper.INSTANCE.shopToShopDto(shop));
+            shopDtos.add(ShopMapper.instance.shopToShopDto(shop));
         }
         return shopDtos;
     }
