@@ -2,6 +2,7 @@ package rs.raf.requests.filters;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import rs.raf.annotations.AuthenticatedAsAdmin;
+import rs.raf.annotations.AuthenticatedAsOperator;
 import rs.raf.models.User;
 import rs.raf.responses.ErrorResponse;
 import rs.raf.services.UserService;
@@ -16,7 +17,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 @Priority(Priorities.AUTHORIZATION)
-@AuthenticatedAsAdmin
+@AuthenticatedAsOperator
 public class OperatorOperationsRequestFilter implements ContainerRequestFilter {
 
     private UserService userService;
