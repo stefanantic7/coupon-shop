@@ -1,12 +1,21 @@
 package rs.raf.dtos;
 
+import rs.raf.models.Coupon;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShopDto {
     private long id;
     private String name;
+    private List<CouponDto> coupons;
 
-    public ShopDto() {}
+    public ShopDto() {
+        this.coupons = new ArrayList<>();
+    }
 
     public ShopDto(long id, String name) {
+        this();
         this.id = id;
         this.name = name;
     }
@@ -27,4 +36,11 @@ public class ShopDto {
         this.name = name;
     }
 
+    public void setCoupons(List<CouponDto> coupons) {
+        this.coupons = coupons;
+    }
+
+    public List<CouponDto> getCoupons() {
+        return coupons;
+    }
 }

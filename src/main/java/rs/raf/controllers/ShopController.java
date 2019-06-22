@@ -5,8 +5,6 @@ import rs.raf.annotations.AuthenticatedAsAdmin;
 import rs.raf.dtos.ShopDto;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
-import rs.raf.repositories.CouponRepository;
-import rs.raf.repositories.ShopRepository;
 import rs.raf.services.ShopService;
 
 import javax.inject.Inject;
@@ -34,6 +32,15 @@ public class ShopController {
     public List<ShopDto> get() {
         return this.shopService.paginate(10, 2);
     }
+
+    @GET
+    @Path("/{shopId}")
+    @AuthenticatedAsAdmin
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShopDto find(@PathParam("shopId") int shopId) {
+        return this.shopService.find(shopId);
+    }
+
 
 
 }

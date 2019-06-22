@@ -3,6 +3,7 @@ package rs.raf.services;
 import rs.raf.dtos.ShopDto;
 import rs.raf.mappers.ShopMapper;
 import rs.raf.models.Shop;
+import rs.raf.repositories.Coupon.CouponRepository;
 import rs.raf.repositories.shop.ShopRepository;
 
 import javax.inject.Inject;
@@ -12,10 +13,12 @@ import java.util.List;
 public class ShopService {
 
     private ShopRepository shopRepository;
+    private CouponRepository couponRepository;
 
     @Inject
-    public ShopService(ShopRepository shopRepository) {
+    public ShopService(ShopRepository shopRepository, CouponRepository couponRepository) {
         this.shopRepository = shopRepository;
+        this.couponRepository = couponRepository;
     }
 
     public List<ShopDto> paginate(int limit, int page) {
@@ -27,4 +30,10 @@ public class ShopService {
         return shopDtos;
     }
 
+    public ShopDto find(int id) {
+        Shop shop = this.shopRepository.find(id);
+        shop.setCoupons(this.couponRepository.getWhereShopId(id));
+        System.out.println(shop.getCoupons());
+        return ShopMapper.instance.shopToShopDto(shop);
+    }
 }

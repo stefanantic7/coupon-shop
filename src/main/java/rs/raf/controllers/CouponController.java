@@ -1,8 +1,8 @@
 package rs.raf.controllers;
 
+import rs.raf.mappers.ShopMapperImpl;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
-import rs.raf.repositories.CouponRepository;
 import rs.raf.services.ShopService;
 
 import javax.ws.rs.*;

@@ -41,4 +41,28 @@ public class ShopRepositoryMySql implements ShopRepository {
 
         return shops;
     }
+
+    @Override
+    public Shop find(int id) {
+        Shop shop = null;
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM shops where id = ?");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                int shopId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                shop = new Shop(shopId, name);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return shop;
+    }
 }

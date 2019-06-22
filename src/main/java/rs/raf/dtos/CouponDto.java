@@ -1,22 +1,17 @@
-package rs.raf.models;
+package rs.raf.dtos;
 
-import java.util.Date;
-
-public class Coupon {
+public class CouponDto {
     private long id;
-    private Shop shop;
-    private long shopId;
     private String product;
     private float discountedPrice;
     private float originalPrice;
-    private Date validFrom;
-    private Date validTo;
+    private String validFrom;
+    private String validTo;
 
-    public Coupon() {}
+    public CouponDto() { }
 
-    public Coupon(long id, int shopId, String product, float originalPrice, float discountedPrice, Date validFrom, Date validTo) {
+    public CouponDto(long id, String product, float originalPrice, float discountedPrice, String validFrom, String validTo) {
         this.id = id;
-        this.shopId = shopId;
         this.product = product;
         this.discountedPrice = discountedPrice;
         this.originalPrice = originalPrice;
@@ -24,8 +19,8 @@ public class Coupon {
         this.validTo = validTo;
     }
 
-    public Coupon(long id, int shopId, String product, float originalPrice, float discountedPrice, Date validFrom) {
-        this(id, shopId, product, originalPrice, discountedPrice, validFrom, null);
+    public CouponDto(long id, String product, float originalPrice, float discountedPrice, String validFrom) {
+        this(id, product, originalPrice, discountedPrice, validFrom, null);
     }
 
     public long getId() {
@@ -34,14 +29,6 @@ public class Coupon {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
     }
 
     public String getProduct() {
@@ -68,27 +55,19 @@ public class Coupon {
         this.originalPrice = originalPrice;
     }
 
-    public Date getValidFrom() {
+    public String getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(Date validFrom) {
+    public void setValidFrom(String validFrom) {
         this.validFrom = validFrom;
     }
 
-    public Date getValidTo() {
+    public String getValidTo() {
         return validTo;
     }
 
-    public void setValidTo(Date validTo) {
+    public void setValidTo(String validTo) {
         this.validTo = validTo;
-    }
-
-    public long getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(long shopId) {
-        this.shopId = shopId;
     }
 }
