@@ -13,3 +13,5 @@ create table users
 
 );
 
+INSERT INTO couponshop.users (id, first_name, last_name, privilege_level, username, password, version)
+VALUES (1, 'Stefan', 'Antic', 'ADMINISTRATOR', 'stefanantic', '12345678', 1);

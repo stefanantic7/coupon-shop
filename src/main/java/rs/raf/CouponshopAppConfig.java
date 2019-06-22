@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 import rs.raf.boot.ApplicationBinder;
 
 import javax.ws.rs.ApplicationPath;
@@ -39,5 +40,7 @@ class CouponshopAppConfig extends ResourceConfig {
 
         packages("rs.raf");
         register(new ApplicationBinder());
+        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+
     }
 }
