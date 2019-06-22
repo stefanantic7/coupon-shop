@@ -2,6 +2,9 @@ package rs.raf.dtos;
 
 import rs.raf.models.Shop;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CouponDto {
     private long id;
     private long shopId;
@@ -9,10 +12,8 @@ public class CouponDto {
     private ShopDto shop;
     private float discountedPrice;
     private float originalPrice;
-    private String validFrom;
-    private String validTo;
-
-    public CouponDto() { }
+    private Date validFrom;
+    private Date validTo;
 
     public long getId() {
         return id;
@@ -47,18 +48,20 @@ public class CouponDto {
     }
 
     public String getValidFrom() {
-        return validFrom;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        return simpleDateFormat.format(validFrom);
     }
 
-    public void setValidFrom(String validFrom) {
+    public void setValidFrom(Date validFrom) {
         this.validFrom = validFrom;
     }
 
     public String getValidTo() {
-        return validTo;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        return simpleDateFormat.format(validTo);
     }
 
-    public void setValidTo(String validTo) {
+    public void setValidTo(Date validTo) {
         this.validTo = validTo;
     }
 

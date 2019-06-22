@@ -10,10 +10,7 @@ import rs.raf.repositories.shop.ShopRepository;
 import rs.raf.responses.PaginationResponse;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class CouponService {
 
@@ -50,5 +47,16 @@ public class CouponService {
         int totalSize = this.couponRepository.count(couponStatus);
         int pages = (int) Math.ceil(totalSize/(float)limit);
         return new PaginationResponse<>(couponDtos, totalSize, page, pages, limit);
+    }
+
+    public void delete(long couponId) {
+        this.couponRepository.delete(couponId);
+    }
+
+    public CouponDto create(long shopId, String product, float discountedPrice,
+                            float originalPrice, Date validFrom, Date validTo) {
+        Coupon coupon = this.couponRepository.create(shopId, product, discountedPrice, originalPrice, validFrom, validTo);
+
+        return CouponMapper.instance.couponToCouponDto(coupon);
     }
 }

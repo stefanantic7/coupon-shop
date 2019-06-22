@@ -17,11 +17,13 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @ApplicationPath("/api")
 class CouponshopAppConfig extends ResourceConfig {
 
     public CouponshopAppConfig() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC +2"));
 
         packages("rs.raf");
         register(new ApplicationBinder());

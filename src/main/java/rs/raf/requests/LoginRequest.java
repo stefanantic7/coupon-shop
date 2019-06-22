@@ -1,15 +1,14 @@
 package rs.raf.requests;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 public class LoginRequest {
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String username;
 
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String password;
 
     public void setUsername(String username) {

@@ -2,16 +2,15 @@ package rs.raf.repositories.Coupon;
 
 import rs.raf.boot.MySqlConnectionPool;
 import rs.raf.enums.CouponStatus;
+import rs.raf.enums.Privilege;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Date;
 
 public class CouponRepositoryMySql implements CouponRepository {
 
@@ -126,6 +125,23 @@ public class CouponRepositoryMySql implements CouponRepository {
     }
 
     @Override
+    public int delete(long id) {
+        int deleted = 0;
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("DELETE FROM coupons where id = ?");
+            preparedStatement.setLong(1, id);
+            deleted = preparedStatement.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
+    @Override
     public int count() {
         int count = 0;
 
@@ -189,5 +205,45 @@ public class CouponRepositoryMySql implements CouponRepository {
         }
 
         return count;
+    }
+
+    @Override
+    public Coupon create(long shopId, String product, float discountedPrice, float originalPrice, Date validFrom, Date validTo) {
+        Coupon coupon = new Coupon();
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            String[] generatedColumns = {"id"};
+
+            preparedStatement = connection
+                    .prepareStatement("INSERT INTO coupons (shop_id, product, discounted_price, original_price, valid_from, valid_to) VALUES(?, ?, ?, ?, ?, ?)", generatedColumns);
+
+            preparedStatement.setLong(1, shopId);
+            preparedStatement.setString(2, product);
+            preparedStatement.setFloat(3, discountedPrice);
+            preparedStatement.setFloat(4, originalPrice);
+            preparedStatement.setDate(5, new java.sql.Date(validFrom.getTime()));
+            preparedStatement.setDate(6, new java.sql.Date(validTo.getTime()));
+
+            //TODO: check execution.
+            preparedStatement.executeUpdate();
+
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                coupon.setId(resultSet.getInt(1));
+                coupon.setProduct(product);
+                coupon.setDiscountedPrice(discountedPrice);
+                coupon.setOriginalPrice(originalPrice);
+                coupon.setValidFrom(validFrom);
+                coupon.setValidTo(validTo);
+            }
+
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return coupon;
     }
 }

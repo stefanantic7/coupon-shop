@@ -1,35 +1,33 @@
 package rs.raf.requests;
 
-import org.hibernate.validator.constraints.Length;
-import rs.raf.enums.Privilege;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class CreateUserRequest {
+
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String firstName;
 
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String lastName;
 
     @NotNull
-    @NotEmpty
+    @NotBlank
     @Pattern(regexp = "administrator|operator|ADMINISTRATOR|OPERATOR")
     private String privilegeLevel;
 
     // TODO: check if user already exists
     @NotNull
-    @NotEmpty
+    @NotBlank
     private String username;
 
     @NotNull
-    @NotEmpty
-    @Length(min = 8, max = 255)
+    @NotBlank
+    @Size(min = 8, max = 255)
     private String password;
 
     public String getFirstName() {
