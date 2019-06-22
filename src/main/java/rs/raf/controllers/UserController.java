@@ -27,6 +27,7 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_JSON)
     public LoginResponse login(@Valid LoginRequest loginRequest) {
         String token = this.userService.login(loginRequest);
-        return new LoginResponse(token);
+        User user = this.userService.find(loginRequest.getUsername());
+        return new LoginResponse(token, user);
     }
 }

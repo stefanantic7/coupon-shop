@@ -1,4 +1,4 @@
-package rs.raf.repositories.users;
+package rs.raf.repositories.user;
 
 import rs.raf.models.User;
 

@@ -27,12 +27,5 @@ public class ShopController {
         return new ArrayList<>();
     }
 
-    @Path("/test")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Shop> getS() {
-        System.out.println("controller");
-        return new ArrayList<>();
-    }
 
 }

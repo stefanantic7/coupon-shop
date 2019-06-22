@@ -73,4 +73,8 @@ public class User {
     public boolean isAdmin() {
         return this.getPrivilegeLevel().equals(Privilege.ADMINISTRATOR);
     }
+
+    public boolean isOperator() {
+        return this.getPrivilegeLevel().equals(Privilege.OPERATOR);
+    }
 }
