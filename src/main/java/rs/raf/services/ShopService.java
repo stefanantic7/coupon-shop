@@ -44,4 +44,9 @@ public class ShopService {
         this.couponRepository.deleteWhereShopId(id);
         this.shopRepository.delete(id);
     }
+
+    public ShopDto create(String name) {
+        Shop shop = this.shopRepository.create(name);
+        return ShopMapper.instance.shopToShopDto(shop);
+    }
 }

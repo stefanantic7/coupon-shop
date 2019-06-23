@@ -97,7 +97,6 @@ public class UserRepositoryMySql implements UserRepository {
 
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                System.out.println(resultSet.getLong(1));
                 user.setId(resultSet.getInt(1));
                 user.setFirstName(firstName);
                 user.setLastName(lastName);

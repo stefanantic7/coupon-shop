@@ -17,5 +17,7 @@ public interface ShopRepository {
 
     int count();
 
+    Shop create(String name);
+
 
 }

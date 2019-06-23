@@ -139,4 +139,36 @@ public class ShopRepositoryMySql implements ShopRepository {
 
         return count;
     }
+
+    @Override
+    public Shop create(String name) {
+        Shop shop = new Shop();
+
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            String[] generatedColumns = {"id"};
+
+            preparedStatement = connection
+                    .prepareStatement("INSERT INTO shops (NAME) VALUES(?)", generatedColumns);
+
+            preparedStatement.setString(1, name);
+
+            //TODO: check execution.
+            preparedStatement.executeUpdate();
+
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                shop.setId(resultSet.getInt(1));
+                shop.setName(name);
+            }
+
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return shop;
+    }
 }

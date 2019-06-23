@@ -5,10 +5,12 @@ import rs.raf.annotations.AuthenticatedAsAdmin;
 import rs.raf.dtos.ShopDto;
 import rs.raf.models.Coupon;
 import rs.raf.models.Shop;
+import rs.raf.requests.CreateShopRequest;
 import rs.raf.responses.PaginationResponse;
 import rs.raf.services.ShopService;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -50,6 +52,14 @@ public class ShopController {
     public Response delete(@PathParam("shopId") int shopId) {
         this.shopService.delete(shopId);
         return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+    @POST
+    @AuthenticatedAsAdmin
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public ShopDto create(@Valid CreateShopRequest createShopRequest) {
+        return this.shopService.create(createShopRequest.getName());
     }
 
 }
