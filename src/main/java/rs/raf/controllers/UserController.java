@@ -39,6 +39,8 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public LoginResponse login(@Valid LoginRequest loginRequest) {
+        System.out.println(loginRequest.getUsername());
+        System.out.println(loginRequest.getPassword());
         String token = this.userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         UserDto user = this.userService.find(loginRequest.getUsername());
         return new LoginResponse(token, user);

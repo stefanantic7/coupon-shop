@@ -9,6 +9,7 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import rs.raf.boot.ApplicationBinder;
+import rs.raf.requests.filters.CorsFilter;
 
 import javax.ws.rs.ApplicationPath;
 import java.security.Key;
@@ -26,6 +27,7 @@ class CouponshopAppConfig extends ResourceConfig {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC +2"));
 
         packages("rs.raf");
+//        register(new CorsFilter());
         register(new ApplicationBinder());
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
