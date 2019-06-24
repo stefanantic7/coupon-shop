@@ -30,7 +30,15 @@ public class ShopController {
     }
 
     @GET
-    @AuthenticatedAsAdmin
+    @Path("/all")
+    @Authenticated
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ShopDto> all() {
+        return this.shopService.all();
+    }
+
+    @GET
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     public PaginationResponse<ShopDto> get(@QueryParam("page")@DefaultValue("1") int page,
                                            @QueryParam("limit")@DefaultValue("10") int limit) {
@@ -39,7 +47,7 @@ public class ShopController {
 
     @GET
     @Path("/{shopId}")
-    @AuthenticatedAsAdmin
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     public ShopDto find(@PathParam("shopId") int shopId) {
         return this.shopService.find(shopId);
@@ -47,7 +55,7 @@ public class ShopController {
 
     @DELETE
     @Path("/{shopId}")
-    @AuthenticatedAsAdmin
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("shopId") int shopId) {
         this.shopService.delete(shopId);
@@ -55,7 +63,7 @@ public class ShopController {
     }
 
     @POST
-    @AuthenticatedAsAdmin
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public ShopDto create(@Valid CreateShopRequest createShopRequest) {

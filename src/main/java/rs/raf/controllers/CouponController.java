@@ -1,5 +1,6 @@
 package rs.raf.controllers;
 
+import rs.raf.annotations.Authenticated;
 import rs.raf.annotations.AuthenticatedAsAdmin;
 import rs.raf.dtos.CouponDto;
 import rs.raf.enums.CouponStatus;
@@ -31,6 +32,7 @@ public class CouponController {
     }
 
     @GET
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     public PaginationResponse<CouponDto> get(@QueryParam("page")@DefaultValue("1") int page,
                                              @QueryParam("limit")@DefaultValue("10") int limit,
@@ -40,7 +42,7 @@ public class CouponController {
 
     @DELETE
     @Path("/{couponId}")
-    @AuthenticatedAsAdmin
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("couponId") int couponId) {
         this.couponService.delete(couponId);
@@ -48,7 +50,7 @@ public class CouponController {
     }
 
     @POST
-    @AuthenticatedAsAdmin
+    @Authenticated
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public CouponDto create(@Valid CreateCouponRequest createCouponRequest) {

@@ -7,6 +7,8 @@ import java.util.Set;
 
 public interface ShopRepository {
 
+    List<Shop> all();
+
     List<Shop> paginate(int limit, int page);
 
     List<Shop> get(Long[] ids);

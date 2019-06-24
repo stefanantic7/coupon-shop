@@ -2,6 +2,7 @@ package rs.raf.requests.filters;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import rs.raf.annotations.AuthenticatedAsAdmin;
+import rs.raf.exceptions.ModelNotFoundException;
 import rs.raf.models.User;
 import rs.raf.responses.ErrorResponse;
 import rs.raf.services.UserService;
@@ -42,7 +43,7 @@ public class AdminOperationsRequestFilter implements ContainerRequestFilter {
 
             requestContext.setProperty("user", user);
 
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException | ModelNotFoundException exception){
             // TODO: return more precise error to user
             ErrorResponse errorResponse = new ErrorResponse(Response.Status.UNAUTHORIZED.getStatusCode(), exception.getLocalizedMessage());
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(errorResponse).build());

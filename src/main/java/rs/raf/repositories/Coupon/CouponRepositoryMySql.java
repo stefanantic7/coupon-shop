@@ -223,9 +223,13 @@ public class CouponRepositoryMySql implements CouponRepository {
             preparedStatement.setFloat(3, discountedPrice);
             preparedStatement.setFloat(4, originalPrice);
             preparedStatement.setDate(5, new java.sql.Date(validFrom.getTime()));
-            preparedStatement.setDate(6, new java.sql.Date(validTo.getTime()));
+            if (validTo != null) {
+                preparedStatement.setObject(6, new java.sql.Date(validTo.getTime()));
+            }
+            else {
+                preparedStatement.setNull(6, Types.TIMESTAMP);
+            }
 
-            //TODO: check execution.
             preparedStatement.executeUpdate();
 
             resultSet = preparedStatement.getGeneratedKeys();
@@ -236,6 +240,7 @@ public class CouponRepositoryMySql implements CouponRepository {
                 coupon.setOriginalPrice(originalPrice);
                 coupon.setValidFrom(validFrom);
                 coupon.setValidTo(validTo);
+                coupon.setShopId(shopId);
             }
 
 

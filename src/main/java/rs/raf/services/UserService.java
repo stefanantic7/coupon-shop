@@ -6,6 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import rs.raf.dtos.UserDto;
+import rs.raf.exceptions.CustomException;
+import rs.raf.exceptions.ModelNotFoundException;
 import rs.raf.mappers.UserMapper;
 import rs.raf.models.User;
 import rs.raf.repositories.user.UserRepository;
@@ -21,16 +23,17 @@ public class UserService {
     @Inject
     private UserRepository userRepository;
 
-    public UserDto create(String firstName, String lastName, String privilegeLevel, String username, String password) {
+    public UserDto create(String firstName, String lastName, String privilegeLevel, String username, String password) throws CustomException, ModelNotFoundException {
+        password = String.valueOf(BCrypt.with(BCrypt.Version.VERSION_2Y).hashToChar(6, password.toCharArray()));
         User user = this.userRepository.create(firstName, lastName, privilegeLevel, username, password);
         return UserMapper.instance.userToUserDto(user);
     }
 
-    public String login(String username, String password) {
+    public String login(String username, String password) throws ModelNotFoundException {
         User user = this.userRepository.find(username);
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword().toCharArray());
         if(!result.verified) {
-            return null;
+            throw new ModelNotFoundException();
         }
 
         LocalDate date = LocalDate.now().plusDays(1);
@@ -45,7 +48,7 @@ public class UserService {
 
     }
 
-    public User parseJwt(String token) {
+    public User parseJwt(String token) throws ModelNotFoundException {
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer("auth0")
@@ -55,11 +58,11 @@ public class UserService {
         return this.userRepository.find(jwt.getClaim("userId").asInt());
     }
 
-    public UserDto find(int id) {
+    public UserDto find(int id) throws ModelNotFoundException {
         return UserMapper.instance.userToUserDto(this.userRepository.find(id));
     }
 
-    public UserDto find(String username) {
+    public UserDto find(String username) throws ModelNotFoundException {
         return UserMapper.instance.userToUserDto(this.userRepository.find(username));
     }
 }

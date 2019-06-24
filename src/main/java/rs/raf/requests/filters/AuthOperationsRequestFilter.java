@@ -1,8 +1,8 @@
 package rs.raf.requests.filters;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import rs.raf.annotations.Authenticated;
 import rs.raf.annotations.AuthenticatedAsAdmin;
-import rs.raf.annotations.AuthenticatedAsOperator;
 import rs.raf.exceptions.ModelNotFoundException;
 import rs.raf.models.User;
 import rs.raf.responses.ErrorResponse;
@@ -18,13 +18,13 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 @Priority(Priorities.AUTHORIZATION)
-@AuthenticatedAsOperator
-public class OperatorOperationsRequestFilter implements ContainerRequestFilter {
+@Authenticated
+public class AuthOperationsRequestFilter implements ContainerRequestFilter {
 
     private UserService userService;
 
     @Inject
-    OperatorOperationsRequestFilter(UserService userService) {
+    AuthOperationsRequestFilter(UserService userService) {
         this.userService = userService;
     }
 
@@ -32,13 +32,13 @@ public class OperatorOperationsRequestFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         try {
             String token = requestContext.getHeaderString("Authorization");
-            if(token.startsWith("Bearer ")) {
+            if(token != null && token.startsWith("Bearer ")) {
                 token = token.replace("Bearer ", "");
             }
 
             User user = this.userService.parseJwt(token);
 
-            if (user == null || !user.isOperator()) {
+            if (user == null) {
                 throw new JWTVerificationException("Permission denied!");
             }
 

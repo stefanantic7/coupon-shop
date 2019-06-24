@@ -32,13 +32,16 @@ public class CouponService {
             shopIds.add(coupon.getShopId());
         }
         Long[] shopIdsArray = shopIds.toArray(new Long[0]);
-        List<Shop> shops = shopRepository.get(shopIdsArray);
-        for (Shop shop: shops) {
-            shopHashMap.put(shop.getId(), shop);
+        if (shopIdsArray.length>0) {
+            List<Shop> shops = shopRepository.get(shopIdsArray);
+            for (Shop shop: shops) {
+                shopHashMap.put(shop.getId(), shop);
+            }
+            for (Coupon coupon: coupons) {
+                coupon.setShop(shopHashMap.get(coupon.getShopId()));
+            }
         }
-        for (Coupon coupon: coupons) {
-            coupon.setShop(shopHashMap.get(coupon.getShopId()));
-        }
+
 
         List<CouponDto> couponDtos = new ArrayList<>(coupons.size());
         for (Coupon coupon: coupons) {
@@ -55,6 +58,8 @@ public class CouponService {
 
     public CouponDto create(long shopId, String product, float discountedPrice,
                             float originalPrice, Date validFrom, Date validTo) {
+        System.out.println(validFrom);
+        System.out.println(validTo);
         Coupon coupon = this.couponRepository.create(shopId, product, discountedPrice, originalPrice, validFrom, validTo);
 
         return CouponMapper.instance.couponToCouponDto(coupon);

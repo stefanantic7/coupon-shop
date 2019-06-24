@@ -5,12 +5,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class LoginRequest {
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Username must not be null")
+    @NotBlank(message = "Username must not be blank")
     private String username;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Password must not be null")
+    @NotBlank(message = "Password must not be blank")
     private String password;
 
     public void setUsername(String username) {

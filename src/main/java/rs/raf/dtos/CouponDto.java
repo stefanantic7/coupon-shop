@@ -2,6 +2,7 @@ package rs.raf.dtos;
 
 import rs.raf.models.Shop;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,8 +13,17 @@ public class CouponDto {
     private ShopDto shop;
     private float discountedPrice;
     private float originalPrice;
+    private float percent;
     private Date validFrom;
     private Date validTo;
+
+    public float getPercent() {
+        float percent = 100 - (discountedPrice*100/originalPrice);
+        DecimalFormat decimalFormat = new DecimalFormat();
+        decimalFormat.setMaximumFractionDigits(2);
+
+        return Float.parseFloat(decimalFormat.format(percent));
+    }
 
     public long getId() {
         return id;
@@ -48,7 +58,7 @@ public class CouponDto {
     }
 
     public String getValidFrom() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(validFrom);
     }
 
@@ -57,7 +67,10 @@ public class CouponDto {
     }
 
     public String getValidTo() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        if (validTo==null) {
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return simpleDateFormat.format(validTo);
     }
 

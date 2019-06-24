@@ -7,27 +7,26 @@ import javax.validation.constraints.Size;
 
 public class CreateUserRequest {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "First Name must not be blank")
+    @NotBlank(message = "First Name must not be blank")
     private String firstName;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Last Name must not be blank")
+    @NotBlank(message = "Last Name must not be blank")
     private String lastName;
 
-    @NotNull
-    @NotBlank
-    @Pattern(regexp = "administrator|operator|ADMINISTRATOR|OPERATOR")
+    @NotNull(message = "Privilege Level must not be blank")
+    @NotBlank(message = "Privilege Level must not be blank")
+    @Pattern(regexp = "administrator|operator|ADMINISTRATOR|OPERATOR", message = "Privilege Level should be administrator or operator")
     private String privilegeLevel;
 
-    // TODO: check if user already exists
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Username Level must not be blank")
+    @NotBlank(message = "Username Level must not be blank")
     private String username;
 
-    @NotNull
-    @NotBlank
-    @Size(min = 8, max = 255)
+    @NotNull(message = "Password Level must not be blank")
+    @NotBlank(message = "password Level must not be blank")
+    @Size(min = 8, max = 255, message = "Password length should be greater than 8 characters")
     private String password;
 
     public String getFirstName() {

@@ -11,28 +11,26 @@ import java.util.Locale;
 
 public class CreateCouponRequest {
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Shop id must not be blank")
+    @Positive(message = "Shop id must not be blank")
     private long shopId;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Product must not be blank")
+    @NotBlank(message = "Product must not be blank")
     private String product;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "Discounted price must not be blank")
+    @PositiveOrZero(message = "Discounted price positive number")
     private float discountedPrice;
 
-    @NotNull
-    @PositiveOrZero
+    @NotNull(message = "Original price must not be blank")
+    @PositiveOrZero(message = "Original price positive number")
     private float originalPrice;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Valid from must not be blank")
+    @NotBlank(message = "Valid from must not be blank")
     private String validFrom;
 
-    @NotNull
-    @NotBlank
     private String validTo;
 
     public long getShopId() {
@@ -73,7 +71,7 @@ public class CreateCouponRequest {
 
     public Date getValidFromDate() {
         try {
-            return new SimpleDateFormat("yyyy-mm-dd").parse(getValidFrom());
+            return new SimpleDateFormat("yyyy-MM-dd").parse(getValidFrom());
         } catch (ParseException e) {
             return null;
         }
@@ -88,8 +86,11 @@ public class CreateCouponRequest {
     }
 
     public Date getValidToDate() {
+        if (getValidTo() == null) {
+            return null;
+        }
         try {
-            return new SimpleDateFormat("yyyy-mm-dd").parse(getValidTo());
+            return new SimpleDateFormat("yyyy-MM-dd").parse(getValidTo());
         } catch (ParseException e) {
             return null;
         }

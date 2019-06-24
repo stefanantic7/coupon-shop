@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 
 public class CreateShopRequest {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "Shop name must not be blank")
+    @NotBlank(message = "Shop name must not be blank")
     private String name;
 
     public void setName(String name) {

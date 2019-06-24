@@ -22,6 +22,16 @@ public class ShopService {
         this.couponRepository = couponRepository;
     }
 
+    public List<ShopDto> all() {
+        List<ShopDto> shopDtos = new ArrayList<>();
+        List<Shop> shops = this.shopRepository.all();
+        for (Shop shop: shops) {
+            shopDtos.add(ShopMapper.instance.shopToShopDto(shop));
+        }
+
+        return shopDtos;
+    }
+
     public PaginationResponse<ShopDto> paginate(int limit, int page) {
         List<ShopDto> shopDtos = new ArrayList<>();
         List<Shop> shops = this.shopRepository.paginate(limit, page);

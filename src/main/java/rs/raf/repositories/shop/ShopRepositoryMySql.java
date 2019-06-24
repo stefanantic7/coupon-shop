@@ -18,6 +18,30 @@ public class ShopRepositoryMySql implements ShopRepository {
     private ResultSet resultSet;
 
     @Override
+    public List<Shop> all() {
+        List<Shop> shops = new ArrayList<>();
+
+        try {
+            connection = MySqlConnectionPool.getConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM shops");
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                int shopId = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                shops.add(new Shop(shopId, name));
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return shops;
+    }
+
+    @Override
     public List<Shop> paginate(int limit, int page) {
         List<Shop> shops = new ArrayList<>();
 

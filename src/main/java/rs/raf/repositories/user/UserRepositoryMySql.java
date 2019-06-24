@@ -2,8 +2,11 @@ package rs.raf.repositories.user;
 
 import rs.raf.boot.MySqlConnectionPool;
 import rs.raf.enums.Privilege;
+import rs.raf.exceptions.CustomException;
+import rs.raf.exceptions.ModelNotFoundException;
 import rs.raf.models.User;
 
+import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +19,7 @@ public class UserRepositoryMySql implements UserRepository {
     private ResultSet resultSet;
 
     @Override
-    public User find(int id) {
+    public User find(int id) throws ModelNotFoundException {
 
         User user = null;
         try {
@@ -36,7 +39,9 @@ public class UserRepositoryMySql implements UserRepository {
 
                 user = new User(userId, firstName, lastName, privilegeLevel, username, password);
             }
-
+            else {
+                throw new ModelNotFoundException();
+            }
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,7 +51,7 @@ public class UserRepositoryMySql implements UserRepository {
     }
 
     @Override
-    public User find(String userUsername) {
+    public User find(String userUsername) throws ModelNotFoundException {
         User user = null;
         try {
             connection = MySqlConnectionPool.getConnection();
@@ -65,6 +70,9 @@ public class UserRepositoryMySql implements UserRepository {
 
                 user = new User(userId, firstName, lastName, privilegeLevel, username, password);
             }
+            else {
+                throw new ModelNotFoundException();
+            }
 
             connection.close();
         } catch (SQLException e) {
@@ -75,7 +83,7 @@ public class UserRepositoryMySql implements UserRepository {
     }
 
     @Override
-    public User create(String firstName, String lastName, String privilegeLevel, String username, String password) {
+    public User create(String firstName, String lastName, String privilegeLevel, String username, String password) throws CustomException, ModelNotFoundException {
         User user = new User();
 
         try {
@@ -92,7 +100,6 @@ public class UserRepositoryMySql implements UserRepository {
             preparedStatement.setString(4, username);
             preparedStatement.setString(5, password);
 
-            //TODO: check execution.
             preparedStatement.executeUpdate();
 
             resultSet = preparedStatement.getGeneratedKeys();
@@ -109,6 +116,9 @@ public class UserRepositoryMySql implements UserRepository {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            //TODO: Create own exception
+            throw new CustomException("User with that username already exists.", Response.Status.BAD_REQUEST);
+//            throw new ModelNotFoundException();
         }
 
         return user;
